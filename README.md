@@ -7,3 +7,4 @@ Guilherme Henrique Pinheiro Gonçalves - 507457 <br>
 Guilherme Gabriel Gocks - Matrícula - 507521 <br>
 Kamilly da Rosa - 507199 <br>
 Alessandra Rodrigues da Silva - 507531
+Said mohamad abou ghaouch - 507163
