@@ -88,3 +88,16 @@ const nomeId = pokedex.map(pokemon => {
     }
 });
 console.log(nomeId);
+
+// Seleciona os elementos do HTML
+const pikachuOutput = document.getElementById('pikachu-output');
+const pokedexOutput = document.getElementById('pokedex-output');
+const nomeIdOutput = document.getElementById('nome-id-output');
+
+// Insere os dados formatados nos elementos HTML
+pikachuOutput.innerText = JSON.stringify(pikachu, null, 2);
+pokedexOutput.innerText = JSON.stringify(pokedex, null, 2);
+nomeIdOutput.innerText = JSON.stringify(nomeId, null, 2);
+
+console.log("Guilherme Pinheiro");
+console.log("Kamilly da Rosa");
