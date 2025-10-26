@@ -10,4 +10,4 @@ Kamilly da Rosa - 507199 <br>
 Mohammed Ahmed Almola - 507227 <br>
 Said Mohamad Abou Ghaouch - 507163
 
-SLIDE: https://www.canva.com/design/DAGzdSW5SgA/Pl90mnE4UWRq77WNleKThw/edit?utm_content=DAGzdSW5SgA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+SLIDE: https://www.canva.com/design/DAGzdSW5SgA/xAZ74_6Qo-VLecUqrLa3Xw/view?utm_content=DAGzdSW5SgA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3c7758da5e
