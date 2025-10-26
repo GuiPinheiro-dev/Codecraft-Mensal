@@ -376,13 +376,11 @@
                 abilitiesList.appendChild(abilityItem);
             });
 
-            // 4. INJETAR A DESCRIÇÃO DO POKÉMON (Novo passo)
+            // 4. INJETAR A DESCRIÇÃO DO POKÉMON
             const notesElement = document.getElementById('pokemon-notes');
-            // Se o campo 'descricao' existir, usa ele. Se não, usa um texto padrão.
             notesElement.textContent = pokemon.descricao
                 ? pokemon.descricao
                 : "Nenhuma anotação ou descrição disponível para este Pokémon. Adicione o campo 'descricao' no seu JSON!";
-
 
         } catch (error) {
             console.error("Erro ao carregar detalhes do Pokémon:", error);
@@ -391,6 +389,19 @@
             document.getElementById('pokemon-details').style.display = 'none';
         }
     }
+
+    // --- FUNÇÃO PARA A TECLA ESC ---
+    function handleKeydown(event) {
+        // Verifica se a tecla pressionada é 'Escape'
+        if (event.key === 'Escape') {
+            // Executa a mesma ação do botão 'Voltar'
+            window.location.href = 'pokedex.html';
+        }
+    }
+
+    // Adiciona o Event Listener no objeto window
+    window.addEventListener('keydown', handleKeydown);
+    // --- FIM DA FUNÇÃO ---
 
     window.onload = loadPokemonDetails;
 </script>
