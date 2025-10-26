@@ -1,0 +1,400 @@
+[
+  {
+    "id": 1,
+    "nome": "Heracross",
+    "tipos": ["Inseto", "Lutador"],
+    "altura_m": 1.5,
+    "peso_kg": 54.0,
+    "habilidades": [
+      { "nome": "Swarm", "escondida": false },
+      { "nome": "Guts", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 80,
+      "ataque": 125,
+      "defesa": 75,
+      "ataque_especial": 40,
+      "defesa_especial": 95,
+      "velocidade": 85
+    },
+    "imagem_url": "imagens/heracross.png"
+  },
+  {
+    "id": 2,
+    "nome": "Gengar",
+    "tipos": ["Fantasma", "Venenoso"],
+    "altura_m": 1.5,
+    "peso_kg": 40.5,
+    "habilidades": [
+      { "nome": "Cursed Body", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 60,
+      "ataque": 65,
+      "defesa": 60,
+      "ataque_especial": 130,
+      "defesa_especial": 75,
+      "velocidade": 110
+    },
+    "imagem_url": "imagens/gengar.png"
+  },
+  {
+    "id": 3,
+    "nome": "Dragonite",
+    "tipos": ["Dragão", "Voador"],
+    "altura_m": 2.2,
+    "peso_kg": 210.0,
+    "habilidades": [
+      { "nome": "Inner Focus", "escondida": false },
+      { "nome": "Multiscale", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 91,
+      "ataque": 134,
+      "defesa": 95,
+      "ataque_especial": 100,
+      "defesa_especial": 100,
+      "velocidade": 80
+    },
+    "imagem_url": "imagens/dragonite.png"
+  },
+  {
+    "id": 4,
+    "nome": "Raichu",
+    "tipos": ["Elétrico"],
+    "altura_m": 0.8,
+    "peso_kg": 30.0,
+    "habilidades": [
+      { "nome": "Static", "escondida": false },
+      { "nome": "Lightning Rod", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 60,
+      "ataque": 90,
+      "defesa": 55,
+      "ataque_especial": 90,
+      "defesa_especial": 80,
+      "velocidade": 110
+    },
+    "imagem_url": "imagens/raichu.png"
+  },
+  {
+    "id": 5,
+    "nome": "Sylveon",
+    "tipos": ["Fada"],
+    "altura_m": 1.0,
+    "peso_kg": 23.5,
+    "habilidades": [
+      { "nome": "Cute Charm", "escondida": false },
+      { "nome": "Pixilate", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 95,
+      "ataque": 65,
+      "defesa": 65,
+      "ataque_especial": 110,
+      "defesa_especial": 130,
+      "velocidade": 60
+    },
+    "imagem_url": "imagens/sylveon.png"
+  },
+  {
+    "id": 6,
+    "nome": "Machamp",
+    "tipos": ["Lutador"],
+    "altura_m": 1.6,
+    "peso_kg": 130.0,
+    "habilidades": [
+      { "nome": "Guts", "escondida": false },
+      { "nome": "No Guard", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 90,
+      "ataque": 130,
+      "defesa": 80,
+      "ataque_especial": 65,
+      "defesa_especial": 85,
+      "velocidade": 55
+    },
+    "imagem_url": "imagens/machomp.png"
+  },
+  {
+    "id": 7,
+    "nome": "Charizard",
+    "tipos": ["Fogo", "Voador"],
+    "altura_m": 1.7,
+    "peso_kg": 90.5,
+    "habilidades": [
+      { "nome": "Blaze", "escondida": false },
+      { "nome": "Solar Power", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 78,
+      "ataque": 84,
+      "defesa": 78,
+      "ataque_especial": 109,
+      "defesa_especial": 85,
+      "velocidade": 100
+    },
+    "imagem_url": "imagens/charizard.png"
+  },
+  {
+    "id": 8,
+    "nome": "Pidgeot",
+    "tipos": ["Normal", "Voador"],
+    "altura_m": 1.5,
+    "peso_kg": 39.5,
+    "habilidades": [
+      { "nome": "Keen Eye", "escondida": false },
+      { "nome": "Tangled Feet", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 83,
+      "ataque": 80,
+      "defesa": 75,
+      "ataque_especial": 70,
+      "defesa_especial": 70,
+      "velocidade": 101
+    },
+    "imagem_url": "imagens/pidgeot.png"
+  },
+  {
+    "id": 9,
+    "nome": "Banette",
+    "tipos": ["Fantasma"],
+    "altura_m": 1.1,
+    "peso_kg": 12.5,
+    "habilidades": [
+      { "nome": "Insomnia", "escondida": false },
+      { "nome": "Frisk", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 64,
+      "ataque": 115,
+      "defesa": 65,
+      "ataque_especial": 83,
+      "defesa_especial": 63,
+      "velocidade": 65
+    },
+    "imagem_url": "imagens/banette.png"
+  },
+  {
+    "id": 10,
+    "nome": "Sceptile",
+    "tipos": ["Grama"],
+    "altura_m": 1.7,
+    "peso_kg": 52.2,
+    "habilidades": [
+      { "nome": "Overgrow", "escondida": false },
+      { "nome": "Unburden", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 70,
+      "ataque": 85,
+      "defesa": 65,
+      "ataque_especial": 105,
+      "defesa_especial": 85,
+      "velocidade": 120
+    },
+    "imagem_url": "imagens/sceptile.png"
+  },
+  {
+    "id": 11,
+    "nome": "Donphan",
+    "tipos": ["Terra"],
+    "altura_m": 1.1,
+    "peso_kg": 120.0,
+    "habilidades": [
+      { "nome": "Sturdy", "escondida": false },
+      { "nome": "Sand Veil", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 90,
+      "ataque": 120,
+      "defesa": 120,
+      "ataque_especial": 60,
+      "defesa_especial": 60,
+      "velocidade": 50
+    },
+    "imagem_url": "imagens/donphan.png"
+  },
+  {
+    "id": 12,
+    "nome": "Lapras",
+    "tipos": ["Água", "Gelo"],
+    "altura_m": 2.5,
+    "peso_kg": 220.0,
+    "habilidades": [
+      { "nome": "Water Absorb", "escondida": false },
+      { "nome": "Shell Armor", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 130,
+      "ataque": 85,
+      "defesa": 80,
+      "ataque_especial": 85,
+      "defesa_especial": 95,
+      "velocidade": 60
+    },
+    "imagem_url": "imagens/lapras.png"
+  },
+  {
+    "id": 13,
+    "nome": "Snorlax",
+    "tipos": ["Normal"],
+    "altura_m": 2.1,
+    "peso_kg": 460.0,
+    "habilidades": [
+      { "nome": "Immunity", "escondida": false },
+      { "nome": "Thick Fat", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 160,
+      "ataque": 110,
+      "defesa": 65,
+      "ataque_especial": 65,
+      "defesa_especial": 110,
+      "velocidade": 30
+    },
+    "imagem_url": "imagens/snorlax.png"
+  },
+  {
+    "id": 14,
+    "nome": "Muk",
+    "tipos": ["Venenoso"],
+    "altura_m": 1.2,
+    "peso_kg": 30.0,
+    "habilidades": [
+      { "nome": "Stench", "escondida": false },
+      { "nome": "Sticky Hold", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 105,
+      "ataque": 105,
+      "defesa": 75,
+      "ataque_especial": 65,
+      "defesa_especial": 100,
+      "velocidade": 50
+    },
+    "imagem_url": "imagens/muk.png"
+  },
+  {
+    "id": 15,
+    "nome": "Mewtwo",
+    "tipos": ["Psíquico"],
+    "altura_m": 2.0,
+    "peso_kg": 122.0,
+    "habilidades": [
+      { "nome": "Pressure", "escondida": false },
+      { "nome": "Unnerve", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 106,
+      "ataque": 110,
+      "defesa": 90,
+      "ataque_especial": 154,
+      "defesa_especial": 90,
+      "velocidade": 130
+    },
+    "imagem_url": "imagens/mewtwo.png"
+  },
+  {
+    "id": 16,
+    "nome": "Onix",
+    "tipos": ["Pedra", "Terra"],
+    "altura_m": 8.8,
+    "peso_kg": 210.0,
+    "habilidades": [
+      { "nome": "Rock Head", "escondida": false },
+      { "nome": "Sturdy", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 35,
+      "ataque": 45,
+      "defesa": 160,
+      "ataque_especial": 30,
+      "defesa_especial": 45,
+      "velocidade": 70
+    },
+    "imagem_url": "imagens/onix.png"
+  },
+  {
+    "id": 17,
+    "nome": "Aggron",
+    "tipos": ["Aço", "Pedra"],
+    "altura_m": 2.1,
+    "peso_kg": 360.0,
+    "habilidades": [
+      { "nome": "Sturdy", "escondida": false },
+      { "nome": "Rock Head", "escondida": false }
+    ],
+    "estatisticas_base": {
+      "hp": 70,
+      "ataque": 110,
+      "defesa": 180,
+      "ataque_especial": 60,
+      "defesa_especial": 60,
+      "velocidade": 50
+    },
+    "imagem_url": "imagens/aggron.png"
+  },
+  {
+    "id": 18,
+    "nome": "Greninja",
+    "tipos": ["Água", "Sombrio"],
+    "altura_m": 1.5,
+    "peso_kg": 40.0,
+    "habilidades": [
+      { "nome": "Torrent", "escondida": false },
+      { "nome": "Protean", "escondida": true }
+    ],
+    "estatisticas_base": {
+      "hp": 72,
+      "ataque": 95,
+      "defesa": 67,
+      "ataque_especial": 103,
+      "defesa_especial": 71,
+      "velocidade": 122
+    },
+    "imagem_url": "imagens/greninja.png"
+  },
+  {
+    "id": 19,
+    "nome": "Rayquaza",
+    "tipos": ["Dragão", "Voador"],
+    "altura_m": 7.0,
+    "peso_kg": 207,
+    "habilidades": [
+      { "nome": "Air Lock", "escondida": false},
+      { "nome": "Delta Stream", "escondida": false}
+    ],
+    "estatisticas_base": {
+      "hp": 105,
+      "ataque": 150,
+      "defesa": 90,
+      "ataque_especial": 150,
+      "defesa_especial": 90,
+      "velocidade": 95
+    },
+    "imagem_url": "imagens/rayquaza.png"
+  },
+  {
+    "id": 20,
+    "nome": "Arceus",
+    "tipos": ["Normal"],
+    "altura_m": 3.2,
+    "peso_kg": 320,
+    "habilidades": [
+      { "nome": "Multitipo", "escondida": false}
+    ],
+    "estatisticas_base": {
+      "hp": 120,
+      "ataque": 120,
+      "defesa": 120,
+      "ataque_especial": 120,
+      "defesa_especial": 120,
+      "velocidade": 120
+    },
+    "imagem_url": "imagens/arceus.png"
+  }
+]
