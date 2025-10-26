@@ -330,6 +330,13 @@
         // FUNÇÕES DO LOCALSTORAGE 
         const FAVORITES_KEY = 'pokedex-favoritos';
 
+        // FUNÇÃO ADICIONADA: Redireciona para a página de detalhes com o ID do Pokémon.
+        function openPokemonDetails(pokemonId) {
+            window.location.href = `dentroPokemon.html?id=${pokemonId}`;
+        }
+
+
+
         function getFavoritos() {
             const favoritosString = localStorage.getItem(FAVORITES_KEY);
             if (favoritosString) {
@@ -542,6 +549,17 @@
             POKEMONS.forEach(pokemon => {
                 const card = document.createElement('div');
                 card.className = 'pokemon-card';
+
+                // === Gui P.: Adicineio isto para os "pop-ups"  ===
+                card.onclick = (event) => {
+                    // Impede o clique se o alvo for o ícone de favorito
+                    if (event.target.classList.contains('favorite-icon')) {
+                        return;
+                    }
+                    openPokemonDetails(pokemon.id);
+                };
+                // =================================
+
                 // Usamos o ID do JSON
                 card.setAttribute('data-pokemon-id', pokemon.id);
 

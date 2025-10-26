@@ -17,6 +17,7 @@
       "defesa_especial": 95,
       "velocidade": 85
     },
+    "descricao": "Este é um Pokémon Inseto/Lutador conhecido por seu poderoso chifre. É herbívoro, mas pode levantar objetos que pesam 100 vezes o seu próprio peso. Se encontrar um, certifique-se de ter mel à mão!",
     "imagem_url": "imagens/heracross.png"
   },
   {
@@ -36,6 +37,7 @@
       "defesa_especial": 75,
       "velocidade": 110
     },
+    "descricao": "Este é um Pokémon do tipo Fantasma/Veneno conhecido por sua natureza travessa e um sorriso malicioso. Ele se esconde nas sombras das pessoas, absorvendo seu calor e causando um arrepio repentino. Dizem que, às vezes, ele tenta levar a vida de suas vítimas, espreitando em suas sombras.",
     "imagem_url": "imagens/gengar.png"
   },
   {
@@ -56,6 +58,7 @@
       "defesa_especial": 100,
       "velocidade": 80
     },
+    "descricao": "Este é um Pokémon do tipo Dragão/Voador conhecido por sua natureza bondosa e por resgatar pessoas no mar. Apesar de seu tamanho robusto, ele pode dar a volta ao mundo em apenas 16 horas. É a encarnação da inteligência marinha, guiando navios perdidos em meio a tempestades. Incorra a ira deste Pokémon calmo por sua conta e risco!",
     "imagem_url": "imagens/dragonite.png"
   },
   {
@@ -76,6 +79,7 @@
       "defesa_especial": 80,
       "velocidade": 110
     },
+    "descricao": "Este é um Pokémon Rato do tipo Elétrico que pode liberar choques de 100.000 volts, o suficiente para nocautear um elefante. Quando agitado e com excesso de eletricidade acumulada em seu corpo, ele se torna mais agressivo. Para se proteger de sua própria carga, ele planta sua cauda no chão para descarregar a energia.",
     "imagem_url": "imagens/raichu.png"
   },
   {
@@ -96,6 +100,7 @@
       "defesa_especial": 130,
       "velocidade": 60
     },
+    "descricao": "Este é um Pokémon do tipo Fada e uma das evoluções do Eevee. Ele utiliza suas fitas sensoriais para envolver o braço de seu Treinador, lendo seus sentimentos. É conhecido por emitir uma aura calmante através dessas fitas, neutralizando hostilidade e parando conflitos. É uma criatura gentil, mas ataca o ponto fraco dos adversários sem hesitar.",
     "imagem_url": "imagens/sylveon.png"
   },
   {
@@ -116,6 +121,7 @@
       "defesa_especial": 85,
       "velocidade": 55
     },
+    "descricao": "Este é um Pokémon do tipo Lutador conhecido por sua força imensa e seus quatro braços. Dizem que ele dominou todas as artes marciais do mundo e pode desferir 1.000 socos em apenas dois segundos. Sua força é tanta que ele pode arremessar oponentes para além do horizonte ou carregar um navio, mas suas mãos são muito desajeitadas para qualquer trabalho delicado.",
     "imagem_url": "imagens/machomp.png"
   },
   {
@@ -136,6 +142,7 @@
       "defesa_especial": 85,
       "velocidade": 100
     },
+    "descricao": "Este é um Pokémon do tipo Fogo/Voador conhecido por sua aparência dracônica e pela força de suas chamas. Ele voa pelos céus procurando por oponentes poderosos e sua respiração de fogo é tão quente que pode derreter pedras. No entanto, ele nunca usará seu sopro flamejante contra um inimigo mais fraco que ele. A chama em sua cauda arde com mais intensidade quando ele está em uma batalha intensa.",
     "imagem_url": "imagens/charizard.png"
   },
   {
@@ -156,6 +163,7 @@
       "defesa_especial": 70,
       "velocidade": 101
     },
+    "descricao": "Este é um Pokémon Pássaro do tipo Normal/Voador conhecido por sua beleza e velocidade. Ele desliza pelos céus a uma velocidade Mach 2 (o dobro da velocidade do som) em busca de presas. Muitos treinadores são cativados pela impressionante beleza de suas plumas na cabeça. Seus músculos peitorais são tão fortes que ele pode criar uma tempestade de vento com apenas algumas batidas de asas.",
     "imagem_url": "imagens/pidgeot.png"
   },
   {
@@ -176,6 +184,7 @@
       "defesa_especial": 63,
       "velocidade": 65
     },
+    "descricao": "Este é um Pokémon Marionete do tipo Fantasma que foi um boneco de pelúcia abandonado e ganhou vida devido a um rancor profundo. Ele usa seu corpo como um boneco vodu, enfiando alfinetes em si mesmo para lançar maldições. O zíper que atua como sua boca mantém sua energia amaldiçoada segura, e se for aberto, ele a perderá. Ele perambula por becos e lixeiras procurando pela criança que o jogou fora.",
     "imagem_url": "imagens/banette.png"
   },
   {
@@ -196,6 +205,7 @@
       "defesa_especial": 85,
       "velocidade": 120
     },
+    "descricao": "Este é um Pokémon Floresta do tipo Grama que se move com agilidade inigualável pela selva. As folhas em seus braços são afiadas como espadas, usadas para fatiar árvores grossas e abater a presa. Suas esferas nas costas contêm nutrientes que revitalizam as árvores. Quando Mega Evolui, ele ganha o tipo Dragão e pode disparar parte de sua cauda como um míssil.",
     "imagem_url": "imagens/sceptile.png"
   },
   {
@@ -216,6 +226,7 @@
       "defesa_especial": 60,
       "velocidade": 50
     },
+    "descricao": "Este é um Pokémon Blindado do tipo Terra, conhecido por sua pele dura como rocha que o protege de ataques comuns e até mesmo de um carro. Seu ataque favorito é se enrolar em uma bola e rolar em alta velocidade em direção ao inimigo, podendo derrubar uma casa com uma única investida! O comprimento de suas presas determina sua classificação dentro do seu bando.",
     "imagem_url": "imagens/donphan.png"
   },
   {
@@ -236,6 +247,7 @@
       "defesa_especial": 95,
       "velocidade": 60
     },
+    "descricao": "Este é um Pokémon Transporte do tipo Água/Gelo conhecido por sua natureza gentil e alta inteligência, sendo capaz de entender a fala humana. Ele adora nadar no mar com pessoas em suas costas, oferecendo uma viagem muito confortável. Devido à sua docilidade, foi caçado quase até a extinção, e à noite, dizem que ele canta uma melodia melancólica enquanto procura por outros de sua espécie.",
     "imagem_url": "imagens/lapras.png"
   },
   {
@@ -256,6 +268,7 @@
       "defesa_especial": 110,
       "velocidade": 30
     },
+    "descricao": "Este é um Pokémon Dorminhoco do tipo Normal que é famoso por sua preguiça: ele só come e dorme, devorando quase 400 kg de comida por dia! Seu estômago é tão forte que ele pode digerir qualquer alimento, mesmo que esteja mofado ou podre, e o veneno de um Muk não passa de um tempero. Quando está com a barriga cheia, fica tão letárgico que nem consegue levantar um dedo, tornando-se um lugar seguro para as crianças brincarem. Geralmente, a única forma de acordá-lo é com uma Poké Flauta.",
     "imagem_url": "imagens/snorlax.png"
   },
   {
@@ -276,6 +289,7 @@
       "defesa_especial": 100,
       "velocidade": 50
     },
+    "descricao": "Este é um Pokémon Lodo do tipo Veneno coberto por uma imunda e viscosa lama. Ele exala um cheiro horrendo que pode causar desmaios e é tão tóxico que até mesmo suas pegadas contêm veneno capaz de matar plantas. Uma única gota do fluido de seu corpo pode tornar um lago inteiro estagnado e rançoso. Ele ama se alimentar de tudo que é repugnantemente sujo.",
     "imagem_url": "imagens/muk.png"
   },
   {
@@ -296,6 +310,7 @@
       "defesa_especial": 90,
       "velocidade": 130
     },
+    "descricao": "Este é um Pokémon Genético do tipo Psíquico, criado por anos de horríveis experimentos para ser o Pokémon mais forte do mundo. Sua inteligência é superior à dos humanos e ele possui um poder mental avassalador, capaz de esmagar um arranha-céu com um mero pensamento. Ele pode se comunicar por telepatia e conserva sua energia até enfrentar um oponente que considere digno.\n\nCuriosamente, ele pode Mega Evoluir para duas formas: Mega Mewtwo X (Psíquico/Lutador) e Mega Mewtwo Y (Psíquico).",
     "imagem_url": "imagens/mewtwo.png"
   },
   {
@@ -316,6 +331,7 @@
       "defesa_especial": 45,
       "velocidade": 70
     },
+    "descricao": "Este é um Pokémon Serpente de Pedra dos tipos Pedra/Terra, conhecido por seu corpo enorme, composto por pedras que endurecem com o tempo, tornando-se parecidas com diamante. Ele cava túneis no subsolo girando e contorcendo seu corpo a uma velocidade de 80 km/h, alimentando-se de rochas à medida que avança. Dizem que ele tem um ímã no cérebro que o impede de perder a direção enquanto está tunelando. Os túneis que ele deixa para trás são frequentemente usados por outros Pokémon, como o Diglett, como casas.",
     "imagem_url": "imagens/onix.png"
   },
   {
@@ -336,6 +352,7 @@
       "defesa_especial": 60,
       "velocidade": 50
     },
+    "descricao": "Este é um Pokémon Blindado de Ferro dos tipos Aço/Pedra, conhecido por sua defesa física e por ser extremamente territorial. Ele reivindica uma montanha inteira como seu território e ataca impiedosamente qualquer um que ouse invadir. Sua armadura é tão resistente que ele pode demolir um caminhão de lixo com uma única investida. Ele patrulha vigilantemente seu território, e caso ele seja devastado por incêndios florestais ou deslizamentos de terra, o Aggron irá restaurá-lo, replantando árvores e levando terra.\n\nQuando Mega Evolui, ele se torna um Pokémon de tipo Aço Puro e possui uma das maiores Defesas do jogo.",
     "imagem_url": "imagens/aggron.png"
   },
   {
@@ -356,6 +373,7 @@
       "defesa_especial": 71,
       "velocidade": 122
     },
+    "descricao": "Este é um Pokémon Ninja dos tipos Água/Sombrio que se move com a graça de um ninja. Ele cria estrelas ninja (Shuriken) feitas de água superafiada, capazes de cortar cabos de aço. Ele usa sua longa língua, que enrola em seu pescoço, para sentir inimigos que não consegue ver e brinca com eles usando movimentos ágeis antes de atacá-los.\n\nSua forma especial Ash-Greninja demonstra um forte laço com seu Treinador, enquanto a recém-revelada Mega Greninja usa uma Shuriken de água gigante para atacar.",
     "imagem_url": "imagens/greninja.png"
   },
   {
@@ -376,6 +394,7 @@
       "defesa_especial": 90,
       "velocidade": 95
     },
+    "descricao": "Este é um Pokémon Lendário do Céu, do tipo Dragão/Voador, conhecido por viver na camada de ozônio do planeta, onde se alimenta de meteoroides. Por esta razão, demorou muito tempo para ser descoberto.\n\nSua lenda diz que ele pôs fim ao confronto titânico entre Kyogre e Groudon, descendo à Terra para acalmar os outros membros do Trio do Clima. Ele tem a capacidade de voar em alta velocidade e, quando Mega Evolui, não necessita de uma Mega Stone, bastando conhecer o movimento Ascensão do Dragão para atingir uma forma ainda mais poderosa. Sua Mega Evolução é notável por alterar o clima, removendo as fraquezas do tipo Voador contra movimentos Super Efetivos (Habilidade Delta Stream).",
     "imagem_url": "imagens/rayquaza.png"
   },
   {
@@ -395,6 +414,7 @@
       "defesa_especial": 120,
       "velocidade": 120
     },
+    "descricao": "Arceus.\nO Pokémon Alfa e criador de tudo",
     "imagem_url": "imagens/arceus.png"
   }
 ]
