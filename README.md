@@ -12,5 +12,5 @@ Said Mohamad Abou Ghaouch - 507163
 
 SLIDES:
 https://www.canva.com/design/DAGzdSW5SgA/xAZ74_6Qo-VLecUqrLa3Xw/view?utm_content=DAGzdSW5SgA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3c7758da5e <br>
-FIGMA:
+FIGMA: 
 https://www.figma.com/design/tQxBDHWqJ9VMga5DKjpGsC/Prot%C3%B3tipos?node-id=0-1&t=3DmoXYIFQ6iPAvS0-1
