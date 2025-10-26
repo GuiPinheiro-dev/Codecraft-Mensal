@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex Completa</title>
     <style>
-        /* === CSS GERAL === */
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,6 +22,49 @@
             background-repeat: no-repeat; 
             background-attachment: fixed; 
             background-color: #0d0f2b;
+        }
+
+        #recent-searches-container {
+            display: none; 
+            flex-direction: column;
+            padding-top: 5px; 
+            padding-bottom: 10px; 
+            margin-bottom: 10px; 
+        }
+
+        #recent-searches {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        #recent-searches-title {
+            font-size: 0.75em; 
+            color: #aaaaaa;   
+            margin-bottom: 5px; 
+            padding: 0 5px;   
+            font-weight: normal; 
+        }
+
+        .recent-search-item {
+            padding: 8px 10px; 
+            color: white; 
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-bottom: 5px; 
+            background-color: #374757;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            /* Adiciona uma sombra sutil para destacar que é um item */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+            display: flex;
+            align-items: center;
+            font-weight: bold; /* Deixa o texto em negrito */
+        }
+
+        .recent-search-item:hover {
+            filter: brightness(1.9); /* Torna a cor de fundo 20% mais clara */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Aumenta a sombra */
         }
 
         /* Botão Voltar */
@@ -53,6 +96,35 @@
             background-color: #9a88ff;
             color: #1a1a2e;
             box-shadow: 2px 2px 0 #6d5b9d;
+        }
+
+        #favorite-filter-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: auto;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            border: 2px solid #9a88ff; 
+            background-color: transparent;
+            color: #9a88ff;
+        }
+
+        #favorite-filter-btn:hover {
+            background-color: #9a88ff;
+            color: #1a1a2e;
+        }
+
+        /* Estado Ativo do Botão de Favoritos */
+        #favorite-filter-btn.active {
+            background-color: #d022bc; /* Cor de favorito (pink) */
+            color: white;
+            border-color: #d022bc;
+        }
+        #favorite-filter-btn.active:hover {
+            background-color: #b31f9d; /* Cor mais escura no hover */
+            color: white;
         }
 
         #pokedex-page {
@@ -216,12 +288,12 @@
             }
 
             #recent-searches {
-                display: flex;
+                display: none;
                 flex-direction: column;
-                gap: 5px;
+                gap: 5px; 
                 padding: 10px 0;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-                margin-bottom: 10px; 
+                margin-bottom: 10px;
             }
 
             .recent-search-item {
@@ -237,12 +309,10 @@
             }
 
             .recent-search-item:hover {
-                background-color: #3a4a5f; /* Cor ao passar o mouse */
+                filter: brightness(1.2); 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
             }
 
-            .recent-search-item span {
-                margin-right: 5px;
-            }
 
             /* Ajusta a grade de Pokémons para apenas duas colunas */
             #pokemon-grid {
@@ -304,10 +374,23 @@
                         id="search-input" 
                         placeholder="Pesquisar Pokémon" 
                         onkeyup="runSearch()"
-                        onkeypress="return handleSearchKey(event)" 
+                        onkeypress="return handleSearchKey(event)"
+                        onfocus="showRecentSearches()"   onblur="hideRecentSearches()" 
                     >
                 </div>
-                <div id="recent-searches"></div>
+
+                <div id="recent-searches-container">
+                    <span id="recent-searches-title">Pesquisas Recentes:</span>
+                    
+                    <div id="recent-searches"></div> 
+                </div>
+
+                <button 
+                    id="favorite-filter-btn" 
+                    onclick="toggleFavoriteFilter()">
+                    Mostrar Favoritos
+                </button>
+
             </div>
 
             <div id="vertical-divider"></div>
@@ -317,20 +400,22 @@
             </div>
         </div>
         
-        <div id="favoritos-display" style="position: absolute; bottom: 10px; right: 10px; font-size: 0.8em;">
-            IDs Favoritos: <span id="favoritos-list"></span>
-        </div>
     </div>
     
 
     <script>
         let POKEMONS = []; 
         let ALL_POKEMONS = [];
+        let isShowingFavorites = false;
+        let hideTimeout;
 
         // FUNÇÕES DO LOCALSTORAGE 
         const FAVORITES_KEY = 'pokedex-favoritos';
+        const RECENT_SEARCHES_KEY = 'pokedex-recent-searches';
+        const MAX_RECENT_SEARCHES = 5; // Limite de itens a serem mostrados
 
-        // FUNÇÃO ADICIONADA: Redireciona para a página de detalhes com o ID do Pokémon.
+
+        // Redireciona para a página de detalhes com o ID do Pokémon.
         function openPokemonDetails(pokemonId) {
             window.location.href = `dentroPokemon.html?id=${pokemonId}`;
         }
@@ -365,12 +450,14 @@
             }
 
             saveFavoritos(favoritos);
-            updateUI();
+
+            //Se estiver no modo favoritos, re-renderiza para remover o Pokémon desfavoritado
+            if (isShowingFavorites) {
+                runSearch(); // Chama a busca que também aplica o filtro de favoritos
+            } else {
+                updateUI(); // Apenas atualiza o coração se não estiver no modo favoritos
+            }
         }
-
-        const RECENT_SEARCHES_KEY = 'pokedex-recent-searches';
-        const MAX_RECENT_SEARCHES = 5; // Limite de itens a serem mostrados
-
         
         // Recupera o histórico de pesquisa do LocalStorage.
         function getRecentSearches() {
@@ -379,7 +466,6 @@
         }
 
         // Salva um novo termo de pesquisa no histórico.
-
         function saveSearchTerm(term) {
             if (!term || term.length < 2) return; // Não salva termos muito curtos
 
@@ -406,6 +492,11 @@
             const searches = getRecentSearches();
             searchesContainer.innerHTML = '';
 
+            const containerPai = document.getElementById('recent-searches-container');
+            if (searches.length === 0 && containerPai) {
+                containerPai.style.display = 'none';
+            }
+
             searches.forEach(term => {
                 const item = document.createElement('div');
                 item.className = 'recent-search-item';
@@ -416,18 +507,37 @@
                 // Faz o clique disparar a pesquisa (função runSearchFromHistory)
                 item.onclick = runSearchFromHistory;
                 
-                item.innerHTML = `
-                    ${term}
-                `;
+                item.textContent = term;
+
                 searchesContainer.appendChild(item);
             });
         }
 
+        function showRecentSearches() {
+            // Cancela o timeout para que o menu não desapareça se o usuário focar novamente
+            clearTimeout(hideTimeout); 
+            const container = document.getElementById('recent-searches-container'); 
+            const searchesContainer = document.getElementById('recent-searches');
+            // Só mostra se houver itens no histórico
+            if (container && searchesContainer.children.length > 0) {
+                container.style.display = 'flex'; 
+            }
+        }
+
+        // Esconde o histórico de pesquisas com um atraso
+        function hideRecentSearches() {
+            const container = document.getElementById('recent-searches-container'); 
+            if (container) {
+                // Adiciona um pequeno atraso antes de esconder.
+                hideTimeout = setTimeout(() => {
+                    container.style.display = 'none'; 
+                }, 200); 
+            }
+        }
         // Função para executar a pesquisa quando um item do histórico é clicado.
         function runSearchFromHistory(event) {
             // Pega o termo de pesquisa do atributo do elemento clicado
             const term = event.currentTarget.getAttribute('data-search-term'); 
-            
             const searchInput = document.getElementById('search-input');
             
             // Preenche o campo de busca com o termo
@@ -435,22 +545,39 @@
             
             // Executa a busca
             runSearch(); 
+            hideRecentSearches();
+            searchInput.focus();
+        }
+
+        //Função para alternar o filtro de favoritos
+        function toggleFavoriteFilter() {
+            isShowingFavorites = !isShowingFavorites;
+            // Toda a lógica de filtragem está em runSearch()
+            runSearch(); 
         }
 
         //Função de Lógica Principal de Filtro (Não salva no histórico)
         function runSearch() {
             const searchInput = document.getElementById('search-input');
-            // Não precisa de .trim() e toLowerCase() aqui, pois o filtro usa essas funções
             const searchTerm = searchInput.value.toLowerCase().trim();
 
+            let baseList = ALL_POKEMONS;
+
+            //Aplica o filtro de favoritos (se ativo)
+            if (isShowingFavorites) {
+                const favoritos = getFavoritos();
+                baseList = ALL_POKEMONS.filter(pokemon => favoritos.includes(pokemon.id));
+            }
+
+            //Aplica o filtro de pesquisa de texto
             let filteredPokemons; 
 
             if (searchTerm === "") {
                 // Se a busca estiver vazia, volta para a lista completa
-                filteredPokemons = ALL_POKEMONS; 
+                filteredPokemons = baseList; 
             } else {
                 // Lógica de filtro:
-                filteredPokemons = ALL_POKEMONS.filter(pokemon => {
+                filteredPokemons = baseList.filter(pokemon => {
                     const nameMatch = pokemon.nome.toLowerCase().includes(searchTerm);
                     const typeMatch = pokemon.tipos.some(tipo => 
                         tipo.toLowerCase().includes(searchTerm)
@@ -474,15 +601,14 @@
             const searchInput = document.getElementById('search-input');
             const searchTerm = searchInput.value.trim();
             
-            // 1. salva o termo no histórico (se não for vazio)
+            // salva o termo no histórico (se não for vazio)
             if (searchTerm.length > 0) {
                 saveSearchTerm(searchTerm);
             }
             
-            // 2. Executa a pesquisa (que já foi feita instantaneamente, mas é bom garantir)
+            // Executa a pesquisa (que já foi feita instantaneamente, mas é bom garantir)
             runSearch(); 
         }
-
 
         // Manipula a tecla 'Enter' no campo de pesquisa.
         
@@ -634,15 +760,14 @@
                     throw new Error(`Erro de rede: ${response.status}`);
                 }
                 
-                // DENTRO DA FUNÇÃO, ATRIBUA A RESPOSTA A 'data'
                 const data = await response.json(); 
                 
-                // USE 'data' PARA POPULAR OS ARRAYS GLOBAIS
                 ALL_POKEMONS = data; 
                 POKEMONS = data; 
                 
                 renderPokemonGrid(); 
                 updateUI();
+                renderRecentSearches();
                 
             } catch (error) {
                 console.error("Não foi possível carregar os dados dos Pokémon:", error);
