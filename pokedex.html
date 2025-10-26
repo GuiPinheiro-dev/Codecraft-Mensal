@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex Completa</title>
+    <style>
+        /* === CSS GERAL === */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0; 
+            color: #e6e6fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-image: url(background/fundo.gif); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-color: #0d0f2b;
+        }
+
+        /* Botão Voltar */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 5px;
+            padding: 8px 15px;
+            z-index: 100;
+        }
+
+        .back-btn button {
+            width: 150px;
+            box-shadow: 2px 2px 0 #6d5b9d;
+            background-color: transparent;
+            color: #9a88ff;
+            border: 2px solid #9a88ff;
+            padding: 10px 30px;
+            margin: 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 4px 4px 0 #6d5b9d; 
+        }
+        .back-btn button:hover {
+            background-color: #9a88ff;
+            color: #1a1a2e;
+            box-shadow: 2px 2px 0 #6d5b9d;
+        }
+
+        #pokedex-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 0;
+            width: 100%; 
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        /* Container principal*/
+        #pokedex-container {
+            display: flex;
+            background-color: transparent; 
+            padding: 30px;
+            gap: 20px;
+            max-width: 1200px;
+            max-height: 550px;
+            margin-top: 0px;
+        }
+        /* Sidebar*/
+        #sidebar {
+            width: 250px;
+            background-color: #2c3e50; 
+            border-radius: 20px;
+            padding: 15px;
+            align-self: stretch;
+            border: 3px solid #0d0d0d;
+            border-right: 3px solid #1a1a2e;
+            box-shadow: 
+            0 0 0 3px #000000, /* Segunda borda interna */
+            inset 0 0 3px rgba(0, 0, 0, 0.5); /* Sombra interna existente */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            background-color: #1a242f;
+            border-radius: 5px;
+            padding: 8px;
+            gap: 10px;
+            border: 1px solid #00bfff; 
+        }
+        .search-box input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: white;
+        }
+        .search-box button {
+            background: none;
+            border: none;
+            color: #00bfff;
+            cursor: pointer;
+        }
+
+        #pokemon-grid-container {
+            background-color: #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto; 
+            border: 3px solid #0d0d0d;
+            border-right: 3px solid #1a1a2e;
+            box-shadow: 
+                0 0 0 3px #12161b, /* Segunda borda interna */
+                inset 0 0 3px rgba(138, 97, 221, 0.5); /* Sombra interna existente */
+        }
+        
+        #pokemon-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px;
+            min-width: 650px;
+        }
+
+        #vertical-divider {
+            width: 2px; 
+            background-color: transparent;
+            display: block;
+        
+        }
+
+        /* Card Individual do Pokémon */
+        .pokemon-card {
+            background-color: #1a242f;
+            border-radius: 8px;
+            padding: 10px;
+            width: 140px;
+            height: 180px; 
+            text-align: center;
+             border: 2px solid #0d0d0d; 
+            box-shadow: 0 0 0 2px #3a3a4d, 0 4px 8px rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .pokemon-card img {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        
+        .pokemon-card h3 {
+            font-size: 1em;
+            margin: 5px 0 0;
+            color: white;
+        }
+
+        /* Ícone de Favorito */
+        .favorite-icon {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: white; 
+        }
+        
+        .favorite-icon.favorited {
+            color: #d022bc; 
+        }
+
+
+        /* === REGRAS DE RESPONSIVIDADE PARA TELAS PEQUENAS (Max-width: 768px) === */
+        @media (max-width: 768px) {
+            
+            /* ZERANDO ALTURAS FIXAS */
+            #pokedex-page {
+                /* Remove a centralização vertical e a altura fixa no celular */
+                height: auto; 
+                min-height: 100vh;
+                padding-bottom: 20px; 
+            }
+
+            /* Altera o contêiner principal para empilhar os elementos */
+            #pokedex-container {
+                flex-direction: column; /* Sidebar fica em cima da grade */
+                max-height: none;       /* Remove a altura máxima para telas pequenas */
+                width: 95%;             /* Ocupa a largura da tela */
+                padding: 15px;          /* Diminui o padding para economizar espaço */
+                gap: 15px;
+                margin-top: 60px; /* Adiciona espaço no topo para o botão "Voltar" */
+            }
+
+            #vertical-divider {
+                display: none; 
+            }
+            
+            /* Remove o tamanho fixo da sidebar */
+            #sidebar {
+                width: 100%; 
+                order: -1; 
+                /* Garante que o conteúdo role verticalmente se a sidebar for muito grande */
+                overflow-y: visible;
+            }
+
+            #recent-searches {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+                margin-bottom: 10px; 
+            }
+
+            .recent-search-item {
+                padding: 5px 10px;
+                background-color: #1a242f; 
+                color: #00bfff;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.9em;
+                transition: background-color 0.2s;
+                display: flex;
+                align-items: center;
+            }
+
+            .recent-search-item:hover {
+                background-color: #3a4a5f; /* Cor ao passar o mouse */
+            }
+
+            .recent-search-item span {
+                margin-right: 5px;
+            }
+
+            /* Ajusta a grade de Pokémons para apenas duas colunas */
+            #pokemon-grid {
+                grid-template-columns: repeat(2, 1fr); 
+                min-width: 100%; 
+            }
+            
+            /* Aumenta os cards para aproveitar o espaço */
+            .pokemon-card {
+                width: auto; 
+                height: auto;
+            }
+
+            .back-btn {
+                /* Centraliza o botão Voltar no celular para melhor estética */
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                text-align: center; /* Centraliza o botão dentro da div */
+                /* Estilização de fundo */
+                background-color: #1a1a2e;
+                padding: 5px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            }
+            .back-btn button {
+                /* Torna o botão um pouco menor no celular */
+                width: 120px;
+                margin: 5px;
+            }
+            
+            /* Se a grade for muito longa, garante que ela possa rolar */
+            #pokemon-grid-container {
+                /* Permite que o container da grade cresça */
+                height: auto; 
+                overflow-y: visible; 
+                padding: 10px; /* Diminui o padding da grade */
+            }
+
+}
+    </style>
+</head>
+<body>
+
+    <div class="back-btn">
+        <button onclick="window.location.href='index.html'">Voltar</button>
+    </div>
+    
+
+    <div id="pokedex-page">
+        <div id="pokedex-container">
+            
+            <div id="sidebar">
+                <div class="search-box">
+                    <button onclick="handleSearchClick()">🔍</button> 
+    
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Pesquisar Pokémon" 
+                        onkeyup="runSearch()"
+                        onkeypress="return handleSearchKey(event)" 
+                    >
+                </div>
+                <div id="recent-searches"></div>
+            </div>
+
+            <div id="vertical-divider"></div>
+
+            <div id="pokemon-grid-container">
+                <div id="pokemon-grid"></div>
+            </div>
+        </div>
+        
+        <div id="favoritos-display" style="position: absolute; bottom: 10px; right: 10px; font-size: 0.8em;">
+            IDs Favoritos: <span id="favoritos-list"></span>
+        </div>
+    </div>
+    
+
+    <script>
+        let POKEMONS = []; 
+        let ALL_POKEMONS = [];
+
+        // FUNÇÕES DO LOCALSTORAGE 
+        const FAVORITES_KEY = 'pokedex-favoritos';
+
+        function getFavoritos() {
+            const favoritosString = localStorage.getItem(FAVORITES_KEY);
+            if (favoritosString) {
+                try {
+                    return JSON.parse(favoritosString);
+                } catch (e) {
+                    return [];
+                }
+            }
+            return [];
+        }
+
+        function saveFavoritos(favoritosArray) {
+            const favoritosString = JSON.stringify(favoritosArray);
+            localStorage.setItem(FAVORITES_KEY, favoritosString);
+        }
+
+        function toggleFavorito(pokemonId) {
+            let favoritos = getFavoritos(); 
+            const index = favoritos.indexOf(pokemonId);
+
+            if (index > -1) {
+                favoritos.splice(index, 1);
+            } else {
+                favoritos.push(pokemonId);
+            }
+
+            saveFavoritos(favoritos);
+            updateUI();
+        }
+
+        const RECENT_SEARCHES_KEY = 'pokedex-recent-searches';
+        const MAX_RECENT_SEARCHES = 5; // Limite de itens a serem mostrados
+
+        
+        // Recupera o histórico de pesquisa do LocalStorage.
+        function getRecentSearches() {
+            const searchesString = localStorage.getItem(RECENT_SEARCHES_KEY);
+            return searchesString ? JSON.parse(searchesString) : [];
+        }
+
+        // Salva um novo termo de pesquisa no histórico.
+
+        function saveSearchTerm(term) {
+            if (!term || term.length < 2) return; // Não salva termos muito curtos
+
+            let searches = getRecentSearches();
+            
+            // Remove o termo se ele já existir (para colocá-lo no topo)
+            searches = searches.filter(t => t.toLowerCase() !== term.toLowerCase());
+            
+            // Adiciona o novo termo no início
+            searches.unshift(term);
+
+            // Limita o array ao tamanho máximo
+            searches = searches.slice(0, MAX_RECENT_SEARCHES);
+
+            localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches));
+            renderRecentSearches(); // Atualiza a exibição imediatamente
+        }
+
+        // Renderiza os termos de pesquisa recentes no HTML.
+        function renderRecentSearches() {
+            const searchesContainer = document.getElementById('recent-searches');
+            if (!searchesContainer) return;
+
+            const searches = getRecentSearches();
+            searchesContainer.innerHTML = '';
+
+            searches.forEach(term => {
+                const item = document.createElement('div');
+                item.className = 'recent-search-item';
+                
+                // Atribui o termo como atributo para ser usado na pesquisa
+                item.setAttribute('data-search-term', term); 
+                
+                // Faz o clique disparar a pesquisa (função runSearchFromHistory)
+                item.onclick = runSearchFromHistory;
+                
+                item.innerHTML = `
+                    ${term}
+                `;
+                searchesContainer.appendChild(item);
+            });
+        }
+
+        // Função para executar a pesquisa quando um item do histórico é clicado.
+        function runSearchFromHistory(event) {
+            // Pega o termo de pesquisa do atributo do elemento clicado
+            const term = event.currentTarget.getAttribute('data-search-term'); 
+            
+            const searchInput = document.getElementById('search-input');
+            
+            // Preenche o campo de busca com o termo
+            searchInput.value = term; 
+            
+            // Executa a busca
+            runSearch(); 
+        }
+
+        //Função de Lógica Principal de Filtro (Não salva no histórico)
+        function runSearch() {
+            const searchInput = document.getElementById('search-input');
+            // Não precisa de .trim() e toLowerCase() aqui, pois o filtro usa essas funções
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            let filteredPokemons; 
+
+            if (searchTerm === "") {
+                // Se a busca estiver vazia, volta para a lista completa
+                filteredPokemons = ALL_POKEMONS; 
+            } else {
+                // Lógica de filtro:
+                filteredPokemons = ALL_POKEMONS.filter(pokemon => {
+                    const nameMatch = pokemon.nome.toLowerCase().includes(searchTerm);
+                    const typeMatch = pokemon.tipos.some(tipo => 
+                        tipo.toLowerCase().includes(searchTerm)
+                    );
+                    const idMatch = pokemon.id.toString().includes(searchTerm);
+
+                    return nameMatch || typeMatch || idMatch;
+                });
+            }
+            
+            POKEMONS = filteredPokemons;
+            renderPokemonGrid();
+            updateUI(); 
+        }
+
+
+        // Manipula o clique no botão ou o pressionar de 'Enter'.
+        // Esta função salva o termo no histórico E dispara a busca.
+    
+        function handleSearchSubmit() {
+            const searchInput = document.getElementById('search-input');
+            const searchTerm = searchInput.value.trim();
+            
+            // 1. salva o termo no histórico (se não for vazio)
+            if (searchTerm.length > 0) {
+                saveSearchTerm(searchTerm);
+            }
+            
+            // 2. Executa a pesquisa (que já foi feita instantaneamente, mas é bom garantir)
+            runSearch(); 
+        }
+
+
+        // Manipula a tecla 'Enter' no campo de pesquisa.
+        
+        function handleSearchKey(event) {
+            // Se a tecla pressionada for 'Enter'
+            if (event.key === 'Enter') {
+                event.preventDefault();  // Impede o envio de formulário
+                handleSearchSubmit();    // Chama a função que salva e busca
+                return false;
+            }
+            // Permite que outras teclas sejam digitadas normalmente no campo
+            return true; 
+        }
+
+        function handleFavoriteToggle(pokemonId) {
+            const id = parseInt(pokemonId);
+            if (id > 0) {
+                toggleFavorito(id);
+            }
+        }
+
+
+        async function loadPokemonData() {
+            try {
+                const response = await fetch('pokemons.json'); 
+                
+                if (!response.ok) {
+                    throw new Error(`Erro de rede: ${response.status}`);
+                }
+                
+                const data = await response.json(); 
+                
+                // POKEMONS é a lista que será filtrada
+                // ALL_POKEMONS é a lista original usada para resetar a pesquisa
+                ALL_POKEMONS = data; 
+                POKEMONS = data; // Inicialmente, a lista de exibição é a lista completa
+                
+                renderPokemonGrid(); 
+                updateUI();
+                renderRecentSearches();
+                
+            } catch (error) {
+                console.error("Não foi possível carregar os dados dos Pokémon:", error);
+                // Exibe uma mensagem de erro na grade
+                const gridContainer = document.getElementById('pokemon-grid');
+                if(gridContainer) {
+                    gridContainer.innerHTML = '<p style="color: #ff5e5e;">Erro ao carregar dados. Verifique se o arquivo pokemons.json existe e se você está rodando em um servidor.</p>';
+                }
+            }
+        }
+
+        // Inicialização: carrega os dados e renderiza
+        window.onload = () => {
+            loadPokemonData();
+        };
+
+        // Cria e injeta os cards de Pokémon na grade.
+        function renderPokemonGrid() {
+            const gridContainer = document.getElementById('pokemon-grid');
+            if (!gridContainer) return;
+
+            gridContainer.innerHTML = ''; // Limpa a grade antes de renderizar
+
+            POKEMONS.forEach(pokemon => {
+                const card = document.createElement('div');
+                card.className = 'pokemon-card';
+                // Usamos o ID do JSON
+                card.setAttribute('data-pokemon-id', pokemon.id);
+
+                // Se o id for maior que 0, significa que é um Pokémon válido
+                if (pokemon.id > 0) {
+                    
+                    // O tipo é uma array, unimos com vírgula ou barra se houver mais de um.
+                    const tiposHtml = pokemon.tipos.join(' / '); 
+
+                    // Card com Pokémon - Usando as novas chaves do JSON
+                    card.innerHTML = `
+                        <img src="${pokemon.imagem_url}" alt="${pokemon.nome}">
+                        <h3>${pokemon.nome}</h3>
+                        <p style="font-size: 0.8em; margin: 2px 0; color: #aaa;">#${pokemon.id}</p>
+                        <p style="font-size: 0.7em; margin: 2px 0; font-weight: bold;">Tipo(s): ${tiposHtml}</p>
+                        <span class="favorite-icon" onclick="handleFavoriteToggle(${pokemon.id})">
+                            ♡
+                        </span>
+                    `;
+                } else {
+                    // Slot vazio (mantido para preencher a grade se necessário, embora não precise mais com um JSON completo)
+                    card.innerHTML = `
+                        <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px dashed #444; border-radius: 8px;">
+                            <h3 style="color: #444; font-size: 0.8em;">Slot Vazio</h3>
+                        </div>
+                    `;
+                    card.querySelector('.favorite-icon').onclick = null;
+                }
+
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // Atualiza o ícone de favorito em todos os cards. (Mantida igual, apenas garante que funcione com os novos IDs)
+        
+        function updateUI() {
+            const favoritos = getFavoritos();
+            
+            // 1. Atualiza o ícone de favorito nos cards
+            document.querySelectorAll('.pokemon-card').forEach(card => {
+                const id = parseInt(card.getAttribute('data-pokemon-id'));
+                const icon = card.querySelector('.favorite-icon');
+
+                if (icon && id > 0) {
+                    if (favoritos.includes(id)) {
+                        icon.classList.add('favorited');
+                        icon.textContent = '❤';
+                    } else {
+                        icon.classList.remove('favorited');
+                        icon.textContent = '♡';
+                    }
+                }
+            });
+
+            // 2. Atualiza a lista de IDs (para debug)
+            const displayElement = document.getElementById('favoritos-list');
+            if (displayElement) {
+                displayElement.textContent = favoritos.length > 0 ? favoritos.join(', ') : 'Nenhum salvo.';
+            }
+        }
+
+
+        // --- INICIALIZAÇÃO E CARREGAMENTO ---
+
+        // Carrega os dados dos Pokémon do arquivo JSON externo.
+    
+        async function loadPokemonData() {
+            try {
+                const response = await fetch('pokemons.json'); 
+                
+                if (!response.ok) {
+                    throw new Error(`Erro de rede: ${response.status}`);
+                }
+                
+                // DENTRO DA FUNÇÃO, ATRIBUA A RESPOSTA A 'data'
+                const data = await response.json(); 
+                
+                // USE 'data' PARA POPULAR OS ARRAYS GLOBAIS
+                ALL_POKEMONS = data; 
+                POKEMONS = data; 
+                
+                renderPokemonGrid(); 
+                updateUI();
+                
+            } catch (error) {
+                console.error("Não foi possível carregar os dados dos Pokémon:", error);
+                // Exibe uma mensagem de erro na grade
+                const gridContainer = document.getElementById('pokemon-grid');
+                if(gridContainer) {
+                    gridContainer.innerHTML = '<p style="color: #ff5e5e;">Erro ao carregar dados. Verifique se o arquivo pokemons.json existe e se você está rodando em um servidor.</p>';
+                }
+            }
+        }
+
+        // Inicialização: carrega os dados e renderiza
+        window.onload = () => {
+            loadPokemonData();
+            };
+    </script>
+
+</body>
+</html>
