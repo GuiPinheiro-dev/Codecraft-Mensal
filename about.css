@@ -1,0 +1,218 @@
+html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            font-family: sans-serif;
+            line-height: 1.2; 
+            background-image: url(background/fundo.gif); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-color: #0d0f2b;
+            overflow-x: hidden;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 5px;
+            padding: 8px 15px;
+            z-index: 100;
+        }
+
+        .back-btn button {
+            width: 150px;
+            box-shadow: 2px 2px 0 #6d5b9d;
+            background-color: transparent;
+            color: #9a88ff;
+            border: 2px solid #9a88ff;
+            padding: 10px 30px;
+            margin: 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 4px 4px 0 #6d5b9d; 
+        }
+        .back-btn button:hover {
+            background-color: #9a88ff;
+            color: #1a1a2e;
+            box-shadow: 2px 2px 0 #6d5b9d;
+        }
+
+        .title-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .pg-container {
+            font-size: 55px;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 0.8;
+        }
+        
+        .pg-container h1 {
+            margin: 0;
+            padding: 0;
+            /* Usando um valor responsivo para o tamanho da fonte */
+            font-size: 10vw;
+        }
+        
+        .scroll-spacer {
+            height: 10vh; /* Altura de rolagem antes dos cards */
+            width: 100%;
+        }
+
+        .page-container {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            margin-bottom: 50px; 
+            width: 100%; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .title-box {
+            background-color: #0d0f2b;
+            border: 3px solid #5a7d9b;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: nowrap; 
+            width: 95%;
+            max-width: 1200px; 
+            margin-bottom: auto; 
+            padding-top: 12vh; 
+        }
+
+        .card {
+            width: 140px; 
+            height: 240px; 
+            
+            background-color: #1a2040; 
+            border: 2px solid #2a3050; 
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+            outline: 5px solid #0d0f2b; 
+            outline-offset: -5px;
+            flex-shrink: 0;
+            
+            /*Coluna para Imagem + Descrição*/
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: space-between; 
+            padding: 10px;
+        }
+
+        .member-image {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 5px;
+        }
+
+        .member-image img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #303555;
+        }
+
+        .member-description {
+            width: 100%;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 0.8em; 
+        }
+
+        .member-description .name {
+            display: block;
+            margin: 5px 0 2px 0;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .member-description .role {
+            display: block;
+            color: #a0a0a0; 
+            font-size: 0.9em;
+        }
+
+
+        .character-placeholder {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+        
+        /* Regras de responsividade para telas menores */
+        @media (max-width: 900px) {
+             .cards-container {
+                /* Quebra em duas linhas para melhor visualização em mobile */
+                flex-wrap: wrap; 
+                gap: 10px; 
+                width: 98%;
+                box-sizing: border-box;
+            }
+            .card {
+                box-sizing: border-box;
+                width: 47%; 
+                min-width: 120px;
+                height: 200px;
+            }
+            .pg-container h1 {
+                font-size: 15vw; /* Título maior em mobile */
+            }
+            .back-btn {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                text-align: center; /* Centraliza o botão dentro da div */
+                /* Estilização de fundo */
+                background-color: #1a1a2e;
+                padding: 5px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            }
+            .back-btn button {
+                /* Torna o botão um pouco menor no celular */
+                width: 120px;
+                margin: 5px;
+            }
+        }

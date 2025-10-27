@@ -1,0 +1,276 @@
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #e6e6fa;
+            min-height: 100vh;
+            
+            display: flex; 
+            justify-content: center; /* centralização horizontal */
+            align-items: flex-start; /* Move o conteúdo para o topo */
+
+            background-color: #0d0f2b;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* CAMADA DE FUNDO DEDICADA PARA O DESFOQUE */
+        #blurred-background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            /* BLUR EXTREMO */
+            filter: blur(30px);
+            z-index: -1;
+
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 5px;
+            z-index: 100;
+        }
+
+        .back-btn button {
+            width: 150px;
+            box-shadow: 2px 2px 0 #6d5b9d;
+            background-color: transparent;
+            color: #9a88ff;
+            border: 2px solid #9a88ff;
+            padding: 10px 30px;
+            margin: 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.6em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 4px 4px 0 #6d5b9d;
+        }
+        .back-btn button:hover {
+            background-color: #9a88ff;
+            color: #1a1a2e;
+            box-shadow: 2px 2px 0 #6d5b9d;
+        }
+
+        /* Estilo do Pop-up de Detalhes com LAYOUT E TRANSPARÊNCIA */
+        #pokemon-details {
+            background-color: rgba(26, 32, 44, 0.85); /* Fundo com leve transparência (85% opaco) */
+            border: 3px solid #6d5b9d;
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 850px;
+            margin-top: 50px;
+            text-align: left;
+            box-shadow: 0 0 25px rgba(154, 136, 255, 0.8);
+            z-index: 10;
+
+            /* LAYOUT PRINCIPAL */
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 15px;
+        }
+
+        /* Contêiner que agrupa a imagem e a seção de texto */
+        #main-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 25px;
+            height: 100%;
+        }
+
+
+        /* Coluna da Imagem (Lado Esquerdo) */
+        #image-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        #pokemon-image {
+            width: 100%;
+            height: auto;
+            max-width: 250px;
+            max-height: 250px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+
+        /* Coluna das Estatísticas (Lado Direito) */
+        #info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        /* Título e Nome */
+        #pokemon-details h1 {
+            grid-column: 1 / -1;
+            color: #9a88ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        #pokemon-name-title {
+            margin-top: -10px;
+            font-size: 1em;
+            text-align: center;
+            color: white;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6d5b9d;
+        }
+
+        /* Bloco de Estatísticas e Habilidades */
+        .stat-group {
+            border: 1px solid #6d5b9d;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stat-group h2 {
+            text-transform: uppercase;
+            font-size: 1.1em;
+            color: #9a88ff;
+            margin: 0 0 10px 0;
+            border-bottom: 1px dashed #6d5b9d;
+            padding-bottom: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .stat-item {
+            padding: 5px 0;
+        }
+
+        .stat-item strong {
+            color: #fff;
+        }
+
+        /* Habilidades */
+        .abilities-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .ability-item {
+            background-color: #9a88ff;
+            color: #0d0f2b;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Informações Adicionais/Anotações */
+        #additional-info {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        #additional-info h2 {
+            text-transform: uppercase;
+            font-size: 1.1em;
+            color: #9a88ff;
+            margin: 0 0 10px 0;
+        }
+
+        /* RESPONSIVIDADE PARA CELULAR */
+        @media (max-width: 768px) {
+
+            body {
+                padding-top: 50px; 
+            }
+
+            #pokemon-name-title {
+                margin-top: -10px;
+                font-size: 1em;
+                text-align: center;
+                color: white;
+                padding-bottom: 0px;
+                border-bottom: 2px solid #6d5b9d;
+            }
+
+            #pokemon-details {
+                grid-template-rows: 1fr 1fr;
+                max-width: 95%;
+                height: auto;
+                max-height: none;
+                width: 90%; /* Ajusta para preencher bem a tela */
+                padding: 15px; /* Diminui o padding geral */
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            #main-content-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                height: auto;
+                overflow-y: visible;
+            }
+
+            #pokemon-details h1 {
+              font-size: 1.2em;
+            }
+
+            #image-container {
+            /* Garante que o conteúdo estático extra caiba */
+                padding: 10px;
+            }
+
+            #pokemon-image {
+                max-width: 200px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr; /* Uma coluna para melhor visualização */
+            }
+
+            .back-btn {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000; 
+                text-align: center;
+                background-color: #1a1a2e; 
+                padding: 5px 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            }
+            .back-btn button {
+                width: 120px;
+                font-size: 0.7em;
+            }
+        }
