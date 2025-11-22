@@ -221,39 +221,50 @@ let POKEMONS = [];
             }
         }
 
-        async function loadPokemonData() {
-            try {
-                const response = await fetch('pokemons.json');
+// Função chamada pelo clique do botão
+function selectGeneration(gen) {
+    // 1. Atualiza o visual dos botões
+    // Remove a classe 'active' de todos
+    document.querySelectorAll('.gen-btn').forEach(btn => btn.classList.remove('active'));
 
-                if (!response.ok) {
-                    throw new Error(`Erro de rede: ${response.status}`);
-                }
+    // Adiciona 'active' no botão clicado (usamos o texto para achar ou o indice)
+    // Uma forma segura é pegar o botão que disparou o evento, mas aqui vamos pelo indice:
+    const botoes = document.querySelectorAll('.gen-btn');
+    if(botoes[gen-1]) {
+        botoes[gen-1].classList.add('active');
+    }
 
-                const data = await response.json();
+    // 2. Carrega os dados
+    loadPokemonData(gen);
+}
 
-                // POKEMONS é a lista que será filtrada
-                // ALL_POKEMONS é a lista original usada para resetar a pesquisa
-                ALL_POKEMONS = data;
-                POKEMONS = data; // Inicialmente, a lista de exibição é a lista completa
+async function loadPokemonData(geracao = 1) {
+    try {
+        const grid = document.getElementById('pokemon-grid');
+        // Loading bonito
+        if(grid) grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                <p>Carregando Geração ${geracao}...</p>
+                <img src="background/fundo.gif" style="width: 50px; opacity: 0.5;">
+            </div>
+        `;
 
-                renderPokemonGrid();
-                updateUI();
-                renderRecentSearches();
+        const response = await fetch(`/pokemons?gen=${geracao}`);
 
-            } catch (error) {
-                console.error("Não foi possível carregar os dados dos Pokémon:", error);
-                // Exibe uma mensagem de erro na grade
-                const gridContainer = document.getElementById('pokemon-grid');
-                if(gridContainer) {
-                    gridContainer.innerHTML = '<p style="color: #ff5e5e;">Erro ao carregar dados. Verifique se o arquivo pokemons.json existe e se você está rodando em um servidor.</p>';
-                }
-            }
-        }
+        if (!response.ok) throw new Error("Erro na API");
 
-        // Inicialização: carrega os dados e renderiza
-        window.onload = () => {
-            loadPokemonData();
-        };
+        const data = await response.json();
+
+        ALL_POKEMONS = data;
+        POKEMONS = data;
+
+        renderPokemonGrid();
+        updateUI(); // Reaplica os favoritos (corações)
+
+    } catch (error) {
+        console.error("Erro:", error);
+    }
+}
 
         // Cria e injeta os cards de Pokémon na grade.
         function renderPokemonGrid() {
@@ -340,33 +351,6 @@ let POKEMONS = [];
         // --- INICIALIZAÇÃO E CARREGAMENTO ---
 
         // Carrega os dados dos Pokémon do arquivo JSON externo.
-
-        async function loadPokemonData() {
-            try {
-                const response = await fetch('pokemons.json');
-
-                if (!response.ok) {
-                    throw new Error(`Erro de rede: ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                ALL_POKEMONS = data;
-                POKEMONS = data;
-
-                renderPokemonGrid();
-                updateUI();
-                renderRecentSearches();
-
-            } catch (error) {
-                console.error("Não foi possível carregar os dados dos Pokémon:", error);
-                // Exibe uma mensagem de erro na grade
-                const gridContainer = document.getElementById('pokemon-grid');
-                if(gridContainer) {
-                    gridContainer.innerHTML = '<p style="color: #ff5e5e;">Erro ao carregar dados. Verifique se o arquivo pokemons.json existe e se você está rodando em um servidor.</p>';
-                }
-            }
-        }
 
         // Inicialização: carrega os dados e renderiza
         window.onload = () => {

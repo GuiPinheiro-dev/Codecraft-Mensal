@@ -21,13 +21,13 @@
         }
 
         try {
-            // Fetch dos dados do JSON
-            const response = await fetch('pokemons.json');
+                // Fetch dos dados do da Poke API
+            const response = await fetch(`/pokemons/${pokemonId}`);
+
             if (!response.ok) {
                 throw new Error("Falha ao carregar pokemons.json");
             }
-            const allPokemons = await response.json();
-            const pokemon = allPokemons.find(p => p.id === pokemonId);
+            const pokemon = await response.json();
 
             if (!pokemon) {
                 document.getElementById('loading-error').textContent = `Pokémon com ID #${pokemonId} não encontrado.`;
