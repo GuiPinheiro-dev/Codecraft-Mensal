@@ -221,50 +221,50 @@ let POKEMONS = [];
             }
         }
 
-// Função chamada pelo clique do botão
-function selectGeneration(gen) {
-    // 1. Atualiza o visual dos botões
-    // Remove a classe 'active' de todos
-    document.querySelectorAll('.gen-btn').forEach(btn => btn.classList.remove('active'));
+        // Função chamada pelo clique do botão
+        function selectGeneration(gen) {
+            // 1. Atualiza o visual dos botões
+            // Remove a classe 'active' de todos
+            document.querySelectorAll('.gen-btn').forEach(btn => btn.classList.remove('active'));
 
-    // Adiciona 'active' no botão clicado (usamos o texto para achar ou o indice)
-    // Uma forma segura é pegar o botão que disparou o evento, mas aqui vamos pelo indice:
-    const botoes = document.querySelectorAll('.gen-btn');
-    if(botoes[gen-1]) {
-        botoes[gen-1].classList.add('active');
-    }
+            // Adiciona 'active' no botão clicado (usamos o texto para achar ou o indice)
+            // Uma forma segura é pegar o botão que disparou o evento, mas aqui vamos pelo indice:
+            const botoes = document.querySelectorAll('.gen-btn');
+            if(botoes[gen-1]) {
+                botoes[gen-1].classList.add('active');
+            }
 
-    // 2. Carrega os dados
-    loadPokemonData(gen);
-}
+            // 2. Carrega os dados
+            loadPokemonData(gen);
+        }
 
-async function loadPokemonData(geracao = 1) {
-    try {
-        const grid = document.getElementById('pokemon-grid');
-        // Loading bonito
-        if(grid) grid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
-                <p>Carregando Geração ${geracao}...</p>
-                <img src="background/fundo.gif" style="width: 50px; opacity: 0.5;">
-            </div>
-        `;
+        async function loadPokemonData(geracao = 1) {
+            try {
+                const grid = document.getElementById('pokemon-grid');
+                // Loading bonito
+                if(grid) grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                        <p>Carregando Geração ${geracao}...</p>
+                        <img src="background/fundo.gif" style="width: 50px; opacity: 0.5;">
+                    </div>
+                `;
 
-        const response = await fetch(`/pokemons?gen=${geracao}`);
+                const response = await fetch(`/pokemons?gen=${geracao}`);
 
-        if (!response.ok) throw new Error("Erro na API");
+                if (!response.ok) throw new Error("Erro na API");
 
-        const data = await response.json();
+                const data = await response.json();
 
-        ALL_POKEMONS = data;
-        POKEMONS = data;
+                ALL_POKEMONS = data;
+                POKEMONS = data;
 
-        renderPokemonGrid();
-        updateUI(); // Reaplica os favoritos (corações)
+                renderPokemonGrid();
+                updateUI(); // Reaplica os favoritos (corações)
 
-    } catch (error) {
-        console.error("Erro:", error);
-    }
-}
+            } catch (error) {
+                console.error("Erro:", error);
+            }
+        }
 
         // Cria e injeta os cards de Pokémon na grade.
         function renderPokemonGrid() {
@@ -354,7 +354,29 @@ async function loadPokemonData(geracao = 1) {
 
         // Inicialização: carrega os dados e renderiza
         window.onload = () => {
+            // Carrega os dados da API
             loadPokemonData();
+
+            // funções de pesquisa aos elementos HTML
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn'); // Verifique se o ID do seu botão é 'search-btn'
+
+            if (searchInput) {
+                // Ao soltar uma tecla (para detectar o Enter)
+                searchInput.addEventListener('keyup', handleSearchKey);
+                // Ao clicar no campo (mostrar histórico)
+                searchInput.addEventListener('focus', showRecentSearches);
+                // Ao sair do campo (esconder histórico)
+                searchInput.addEventListener('blur', hideRecentSearches);
+            }
+
+            if (searchBtn) {
+                // Ao clicar no botão de lupa
+                searchBtn.addEventListener('click', handleSearchSubmit);
+            }
+
+            // Renderiza o histórico que já estava salvo no LocalStorage
+            renderRecentSearches();
             };
 
         function handleKeydown(event) {
