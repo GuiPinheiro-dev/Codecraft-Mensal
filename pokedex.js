@@ -245,7 +245,25 @@ let POKEMONS = [];
                 if(grid) grid.innerHTML = `
                     <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
                         <p>Carregando Geração ${geracao}...</p>
-                        <img src="background/fundo.gif" style="width: 50px; opacity: 0.5;">
+                        <div class="loader" ></div>
+                        <style>
+                        .loader {
+                            margin: 0 auto; 
+                            display: block;
+                            border: 5px solid #f3f3f3; 
+                            border-top: 5px solid #712a8bff; 
+                            border-radius: 50%;
+                            width: 40px;
+                            height: 40px;
+                            animation: spin 1s linear infinite;
+                            opacity: 0.8;
+                            }
+                            
+                            @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                        </style>
                     </div>
                 `;
 
