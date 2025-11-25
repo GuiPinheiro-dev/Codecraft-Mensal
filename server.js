@@ -75,7 +75,7 @@ const GENERATIONS = {
     9: { offset: 905, limit: 120 }
 };
 
-// ROTA 1: Listar Pokémons
+// Listar Pokémons
 app.get('/pokemons', async (req, res) => {
     try {
         // Pega o parâmetro 'gen' da URL (ex: /pokemons?gen=2)
@@ -108,15 +108,15 @@ app.get('/pokemons', async (req, res) => {
 });
 
 
-// ROTA 1: Listar Pokémons (para a Home)
-// Limitamos a 20 para não ficar lento, mas você pode aumentar ou criar paginação
+// Listar Pokémons (para a Home)
+// Limitamos a 20 para não ficar lento
 app.get('/pokemons', async (req, res) => {
     try {
         const limit = 50; // Quantos pokemons carregar na home
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
 
-        // A lista inicial só tem nome e URL. Precisamos buscar os detalhes de CADA um
-        // para pegar a imagem e os tipos para o seu card.
+        // A lista inicial só tem nome e URL. É preciso buscar os detalhes de CADA um
+        // para pegar a imagem e os tipos para o card.
         const promises = response.data.results.map(p => axios.get(p.url));
         const results = await Promise.all(promises);
 
@@ -129,7 +129,7 @@ app.get('/pokemons', async (req, res) => {
     }
 });
 
-// ROTA 2: Detalhes do Pokémon (para o dentroPokemon)
+//  Detalhes do Pokémon (para o dentroPokemon)
 app.get('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -138,11 +138,6 @@ app.get('/pokemons/:id', async (req, res) => {
             axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`),
             axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
         ]);
-
-        // Como sua página de detalhes espera uma lista, vamos retornar um array com 1 item
-        // ou você pode adaptar o front para receber o objeto direto.
-        // Vou manter a estrutura atual do seu formatPokemon retornando objeto simples,
-        // mas o seu front atual busca no array. Vamos ajustar o front.
 
         const pokemonFormatado = formatPokemon(pokemonRes.data, speciesRes.data);
         res.json(pokemonFormatado);

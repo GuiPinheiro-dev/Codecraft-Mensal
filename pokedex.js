@@ -10,6 +10,8 @@ let POKEMONS = [];
 
         // Redireciona para a página de detalhes com o ID do Pokémon.
         function openPokemonDetails(pokemonId) {
+            // Salva a posição do scroll antes de sair
+            sessionStorage.setItem('scrollPos', window.scrollY);
             window.location.href = `dentroPokemon.html?id=${pokemonId}`;
         }
 
@@ -223,7 +225,9 @@ let POKEMONS = [];
 
         // Função chamada pelo clique do botão
         function selectGeneration(gen) {
-            // 1. Atualiza o visual dos botões
+            // Salva a geração no navegador
+            sessionStorage.setItem('genAtiva', gen);
+            //  Atualiza o visual dos botões
             // Remove a classe 'active' de todos
             document.querySelectorAll('.gen-btn').forEach(btn => btn.classList.remove('active'));
 
@@ -234,7 +238,7 @@ let POKEMONS = [];
                 botoes[gen-1].classList.add('active');
             }
 
-            // 2. Carrega os dados
+            // Carrega os dados
             loadPokemonData(gen);
         }
 
@@ -278,6 +282,16 @@ let POKEMONS = [];
 
                 renderPokemonGrid();
                 updateUI(); // Reaplica os favoritos (corações)
+
+                // Restaura o scroll se houver 
+                const scrollSalvo = sessionStorage.getItem('scrollPos');
+                if (scrollSalvo) {
+                    setTimeout(() => {
+                        window.scrollTo(0, parseFloat(scrollSalvo));
+                        // Limpa o scroll para não rolar se der F5 na página
+                        sessionStorage.removeItem('scrollPos'); 
+                    }, 150); // Pequeno delay para garantir que o DOM renderizou
+                }
 
             } catch (error) {
                 console.error("Erro:", error);
@@ -367,13 +381,17 @@ let POKEMONS = [];
         }
 
         // --- INICIALIZAÇÃO E CARREGAMENTO ---
-
-        // Carrega os dados dos Pokémon do arquivo JSON externo.
-
-        // Inicialização: carrega os dados e renderiza
         window.onload = () => {
-            // Carrega os dados da API
-            loadPokemonData();
+            // Lógica de recuperação de estado
+            const genSalva = sessionStorage.getItem('genAtiva');
+            
+            if (genSalva) {
+                // Se tem salvo, chama a selectGeneration (ela já carrega os dados e pinta o botão)
+                selectGeneration(parseInt(genSalva));
+            } else {
+                // Se não tem (primeira vez), carrega o padrão
+                loadPokemonData();
+            }
 
             // funções de pesquisa aos elementos HTML
             const searchInput = document.getElementById('search-input');

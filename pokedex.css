@@ -1,7 +1,5 @@
 body {
-            height: 100vh;       /* Altura fixa da tela */
-            overflow: hidden;    /* PROIBIDO criar barra de rolagem na página inteira */
-
+            height: auto;     /* Altura fixa da tela */
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -15,7 +13,7 @@ body {
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: scroll;
             background-color: #0d0f2b;
         }
 
@@ -140,7 +138,7 @@ body {
             background-color: transparent;
             padding: 30px;
             gap: 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             max-height: 550px;
             margin-top: 0px;
         }
@@ -188,7 +186,8 @@ body {
             border-radius: 10px;
             padding: 20px;
             height: 400px;
-            overflow-y: auto;
+            width: 725px;
+            overflow-y: scroll;
             border: 3px solid #0d0d0d;
             border-right: 3px solid #1a1a2e;
             box-shadow:
@@ -208,6 +207,31 @@ body {
             background-color: transparent;
             display: block;
 
+        }
+
+        /* ESTILIZAÇÃO DA BARRA DE ROLAGEM  */
+
+        /* Largura da Barra */
+        #pokemon-grid-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Fundo da Barra */
+        #pokemon-grid-container::-webkit-scrollbar-track {
+            background: #1a242f;
+            border-radius: 10px;
+        }
+
+        /* Carretel (Thumb) */
+        #pokemon-grid-container::-webkit-scrollbar-thumb {
+            background-color: #9a88ff;
+            border-radius: 10px;
+            border: 2px solid #1a242f; 
+        }
+
+        /* Efeito Hover no Carretel */
+        #pokemon-grid-container::-webkit-scrollbar-thumb:hover {
+            background-color: #6d5b9d;
         }
 
         /* Card Individual do Pokémon */
@@ -315,21 +339,28 @@ body {
         /* === RESPONSIVIDADE === */
         @media (max-width: 768px) {
 
+            body {
+                height: auto;
+                min-height: 100vh;
+            }
+
             #pokedex-page {
                 /* Remove a centralização vertical e a altura fixa no celular */
                 height: auto;
                 min-height: 100vh;
                 padding-bottom: 20px;
+                align-items: flex-start;
             }
 
             /* Altera o contêiner principal para empilhar os elementos */
             #pokedex-container {
                 flex-direction: column; /* Sidebar fica em cima da grade */
                 max-height: none;       /* Remove a altura máxima para telas pequenas */
-                width: 95%;             /* Ocupa a largura da tela */
-                padding: 15px;          /* Diminui o padding para economizar espaço */
+                width: 90%;             /* Ocupa a largura da tela */
+                padding: 10px;          /* Diminui o padding para economizar espaço */
                 gap: 15px;
-                margin-top: 65px; /* Adiciona espaço no topo para o botão "Voltar" */
+                margin-top: 100px; /* Adiciona espaço no topo para o botão "Voltar" */
+                max-width: 100%;
             }
 
             #vertical-divider {
@@ -340,9 +371,43 @@ body {
             #sidebar {
                 width: 100%;
                 order: -1;
+                padding: 10px; /* Reduz padding para economizar espaço */
+                gap: 10px;
                 /* Garante que o conteúdo role verticalmente se a sidebar for muito grande */
                 overflow-y: visible;
                 box-sizing: border-box;
+            }
+
+            .generation-container {
+                position: fixed;
+                top: 60px; /* Ajuste para ficar logo abaixo do botão "Voltar" */
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px; /* Reduz o gap */
+                padding: 5px 10px;
+                z-index: 100; 
+                flex-wrap: nowrap; /* Impede a quebra de linha */
+                overflow-x: auto; /* Permite a rolagem horizontal */
+                justify-content: flex-start; /* Alinha no início, não centraliza */
+                padding-bottom: 8px; /* Adiciona espaço para a scrollbar não grudar */
+                &::-webkit-scrollbar { /*  esconde a scrollbar horizontal para estética */
+
+                    height: 0;
+                }
+                /* Adicionar um fundo semi-transparente para melhor leitura */
+                background-color: rgba(26, 26, 46, 0.9);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            }
+            
+            .gen-btn {
+                padding: 6px 12px; /* Reduz o padding do botão */
+                font-size: 0.8rem;
+            }
+            .generation-container .gen-btn {
+                flex-shrink: 0; 
             }
 
             #recent-searches {
@@ -376,12 +441,14 @@ body {
             #pokemon-grid {
                 grid-template-columns: repeat(2, 1fr);
                 min-width: 100%;
+                gap: 8px;
             }
 
             /* Aumenta os cards para aproveitar o espaço */
             .pokemon-card {
                 width: auto;
                 height: auto;
+                padding: 6px;
             }
 
             .back-btn {
