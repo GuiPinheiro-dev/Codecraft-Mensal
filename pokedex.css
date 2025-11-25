@@ -359,7 +359,7 @@ body {
                 width: 90%;             /* Ocupa a largura da tela */
                 padding: 10px;          /* Diminui o padding para economizar espaço */
                 gap: 15px;
-                margin-top: 100px; /* Adiciona espaço no topo para o botão "Voltar" */
+                margin-top: 140px; /* Adiciona espaço no topo para o botão "Voltar" */
                 max-width: 100%;
             }
 
@@ -389,25 +389,18 @@ body {
                 gap: 8px; /* Reduz o gap */
                 padding: 5px 10px;
                 z-index: 100; 
-                flex-wrap: nowrap; /* Impede a quebra de linha */
-                overflow-x: auto; /* Permite a rolagem horizontal */
-                justify-content: flex-start; /* Alinha no início, não centraliza */
-                padding-bottom: 8px; /* Adiciona espaço para a scrollbar não grudar */
-                &::-webkit-scrollbar { /*  esconde a scrollbar horizontal para estética */
-
-                    height: 0;
-                }
                 /* Adicionar um fundo semi-transparente para melhor leitura */
                 background-color: rgba(26, 26, 46, 0.9);
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             }
             
             .gen-btn {
-                padding: 6px 12px; /* Reduz o padding do botão */
-                font-size: 0.8rem;
-            }
-            .generation-container .gen-btn {
+                width: calc(33.33% - 6px); /* 100% / 3, subtraindo o espaço do gap (8px) */
                 flex-shrink: 0; 
+                
+                padding: 4px 8px; /* Botões menores */
+                font-size: 0.7rem; /* Fonte menor */
+                text-align: center;
             }
 
             #recent-searches {
@@ -476,29 +469,6 @@ body {
                 height: auto;
                 overflow-y: visible;
                 padding: 10px; /* Diminui o padding da grade */
-            }
-
-            .generation-container {
-            /* tira do fluxo para não empurrar a Pokédex */
-            position: fixed;
-
-            box-sizing: border-box; /* Para não "estourar" o tamanho da página */
-
-            /* Ajuste a altura aqui. Como seu botão 'Voltar' está em 20px,
-            vamos colocar os botões de geração um pouco abaixo dele. */
-            top: 85px;
-
-            /* Centralização horizontal absoluta */
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-
-            /* Estilos visuais */
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 0 10px;
-            z-index: 10; /* Garante que fique na frente de tudo */
             }
 
             /* Estilo Base do Botão */
