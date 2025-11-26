@@ -107,28 +107,6 @@ app.get('/pokemons', async (req, res) => {
     }
 });
 
-
-// Listar Pokémons (para a Home)
-// Limitamos a 20 para não ficar lento
-app.get('/pokemons', async (req, res) => {
-    try {
-        const limit = 50; // Quantos pokemons carregar na home
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
-
-        // A lista inicial só tem nome e URL. É preciso buscar os detalhes de CADA um
-        // para pegar a imagem e os tipos para o card.
-        const promises = response.data.results.map(p => axios.get(p.url));
-        const results = await Promise.all(promises);
-
-        const formattedList = results.map(r => formatPokemon(r.data));
-
-        res.json(formattedList);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Erro ao buscar pokémons');
-    }
-});
-
 //  Detalhes do Pokémon (para o dentroPokemon)
 app.get('/pokemons/:id', async (req, res) => {
     const { id } = req.params;
