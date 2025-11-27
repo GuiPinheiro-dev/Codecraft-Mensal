@@ -142,11 +142,17 @@ let POKEMONS = [];
             searchInput.focus();
         }
 
-        //Função para alternar o filtro de favoritos
+        // Função para alternar o filtro de favoritos
         function toggleFavoriteFilter() {
             isShowingFavorites = !isShowingFavorites;
-            // Toda a lógica de filtragem está em runSearch()
-            runSearch();
+            // Se o botão 'Meus Favoritos' estiver ativo
+            if (isShowingFavorites) {
+                loadFavoriteData(); // ⬅️ Chamamos a nova função que busca no backend
+            } else {
+                // Se sair do modo favoritos, volta a carregar a última geração ativa
+                const genSalva = sessionStorage.getItem('genAtiva') || 1;
+                loadPokemonData(parseInt(genSalva));
+            }
         }
 
         //Função de Lógica Principal de Filtro (Não salva no histórico)
@@ -154,13 +160,9 @@ let POKEMONS = [];
             const searchInput = document.getElementById('search-input');
             const searchTerm = searchInput.value.toLowerCase().trim();
 
-            let baseList = ALL_POKEMONS;
+            let baseList = ALL_POKEMONS; // ⬅️ Agora baseList é sempre ALL_POKEMONS
 
-            //Aplica o filtro de favoritos (se ativo)
-            if (isShowingFavorites) {
-                const favoritos = getFavoritos();
-                baseList = ALL_POKEMONS.filter(pokemon => favoritos.includes(pokemon.id));
-            }
+            // Removido: O filtro de favoritos foi movido para loadFavoriteData
 
             //Aplica o filtro de pesquisa de texto
             let filteredPokemons;
@@ -243,60 +245,147 @@ let POKEMONS = [];
         }
 
         async function loadPokemonData(geracao = 1) {
-            try {
-                const grid = document.getElementById('pokemon-grid');
-                // Loading bonito
-                if(grid) grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
-                        <p>Carregando Geração ${geracao}...</p>
-                        <div class="loader" ></div>
-                        <style>
-                        .loader {
-                            margin: 0 auto; 
-                            display: block;
-                            border: 5px solid #f3f3f3; 
-                            border-top: 5px solid #712a8bff; 
-                            border-radius: 50%;
-                            width: 40px;
-                            height: 40px;
-                            animation: spin 1s linear infinite;
-                            opacity: 0.8;
-                            }
-                            
-                            @keyframes spin {
-                            0% { transform: rotate(0deg); }
-                            100% { transform: rotate(360deg); }
-                        }
-                        </style>
-                    </div>
-                `;
+            const STORAGE_KEY = `pokemon_gen_${geracao}`;
+            const grid = document.getElementById('pokemon-grid');
+            let data = null; // Variável para armazenar os dados finais
 
-                const response = await fetch(`/pokemons?gen=${geracao}`);
+            // 1. TENTAR CARREGAR DO CACHE (Session Storage)
+            const cachedDataString = sessionStorage.getItem(STORAGE_KEY);
 
-                if (!response.ok) throw new Error("Erro na API");
+            if (cachedDataString) {
+                // CACHE HIT: Carrega instantaneamente sem delay ou chamada à API
+                console.log(`Geração ${geracao} carregada do Session Storage.`);
+                try {
+                    data = JSON.parse(cachedDataString);
+                } catch (e) {
+                    console.error("Erro ao fazer parse do cache, buscando na API.", e);
+                    sessionStorage.removeItem(STORAGE_KEY);
+                    // data continua null, forçando o fluxo para a API
+                }
+            }
 
-                const data = await response.json();
+            // 2. BUSCAR NA API SE NÃO HOUVER CACHE VÁLIDO
+            if (!data) {
+                try {
+                    // Mostrar Loading (só mostra aqui, pois no cache hit não queremos)
+                    if(grid) grid.innerHTML = `
+                                <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                                    <p>Carregando Geração ${geracao}...</p>
+                                    <div class="loader" ></div>
+                                    <style>
+                                    .loader {
+                                        margin: 0 auto; 
+                                        display: block;
+                                        border: 5px solid #f3f3f3; 
+                                        border-top: 5px solid #712a8bff; 
+                                        border-radius: 50%;
+                                        width: 40px;
+                                        height: 40px;
+                                        animation: spin 1s linear infinite;
+                                        opacity: 0.8;
+                                        }
+                                        
+                                        @keyframes spin {
+                                        0% { transform: rotate(0deg); }
+                                        100% { transform: rotate(360deg); }
+                                    }
+                                    </style>
+                                </div>
+                            `;
 
+                    const response = await fetch(`/pokemons?gen=${geracao}`);
+
+                    if (!response.ok) throw new Error("Erro na API");
+
+                    data = await response.json();
+
+                    // 💾 SALVAR NO CACHE APÓS O SUCESSO DA BUSCA
+                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    console.log(`Geração ${geracao} salva no Session Storage.`);
+
+                } catch (error) {
+                    console.error("Erro:", error);
+                    // Exibir mensagem de erro
+                    if(grid) grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red; padding: 50px;">Erro ao carregar dados. Tente novamente.</div>`;
+                    return; // Interrompe se houve erro na API
+                }
+            }
+
+            // 3. ATUALIZAR INTERFACE COM OS DADOS (seja do cache ou da API)
+            if (data) {
                 ALL_POKEMONS = data;
                 POKEMONS = data;
 
                 renderPokemonGrid();
                 updateUI(); // Reaplica os favoritos (corações)
 
-                // Restaura o scroll se houver 
+                // Restaura o scroll se houver
                 const scrollSalvo = sessionStorage.getItem('scrollPos');
                 if (scrollSalvo) {
                     setTimeout(() => {
                         window.scrollTo(0, parseFloat(scrollSalvo));
                         // Limpa o scroll para não rolar se der F5 na página
-                        sessionStorage.removeItem('scrollPos'); 
+                        sessionStorage.removeItem('scrollPos');
                     }, 150); // Pequeno delay para garantir que o DOM renderizou
                 }
-
-            } catch (error) {
-                console.error("Erro:", error);
             }
         }
+
+
+        // Busca favoritos pela API
+        async function loadFavoriteData() {
+            const favoritos = getFavoritos();
+            const grid = document.getElementById('pokemon-grid');
+            let data = [];
+
+            if (favoritos.length === 0) {
+                if(grid) grid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                                <p>Você não possui nenhum Pokémon marcado como favorito!</p>
+                            </div>
+                        `;
+                ALL_POKEMONS = [];
+                POKEMONS = [];
+                return; // Não há o que buscar
+            }
+
+            // 1. Mostrar Loading
+            if(grid) grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                            <p>Carregando seus Pokémons Favoritos...</p>
+                            <div class="loader" ></div>
+                            </div>
+                    `;
+
+            try {
+                // 2. Chama a nova rota no seu Backend, enviando os IDs no corpo
+                const response = await fetch('/pokemons/favoritos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ids: favoritos })
+                });
+
+                if (!response.ok) throw new Error("Erro na API de Favoritos");
+
+                data = await response.json();
+
+            } catch (error) {
+                console.error("Erro ao carregar favoritos:", error);
+                if(grid) grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red; padding: 50px;">Erro ao carregar favoritos.</div>`;
+                return;
+            }
+
+            // 3. ATUALIZAR INTERFACE
+            ALL_POKEMONS = data; // A lista base agora é apenas a dos favoritos
+            POKEMONS = data;     // A lista exibida também é a dos favoritos
+
+            // Se havia um termo de busca no input, re-aplica-o sobre os favoritos
+            runSearch();
+            updateUI();
+        }
+
 
         // Cria e injeta os cards de Pokémon na grade.
         function renderPokemonGrid() {

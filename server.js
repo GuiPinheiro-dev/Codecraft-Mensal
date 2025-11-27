@@ -5,6 +5,9 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+// Permite que o servidor leia JSON enviado no corpo da requisição
+app.use(express.json());
+
 // Mapa para traduzir os tipos da PokeAPI (Inglês) para o seu padrão (Português)
 // Isso garante que seus fundos e CSS continuem funcionando!
 const typeTranslations = {
@@ -123,6 +126,35 @@ app.get('/pokemons/:id', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Erro ao buscar detalhes do pokémon');
+    }
+});
+
+// Rota para múltiplos pokemon (independente da geração)
+app.post('/pokemons/favoritos', async (req, res) => { // ⬅️ Usamos POST para enviar uma lista grande de IDs no corpo
+    try {
+        // Pega a lista de IDs de Pokémon do corpo da requisição enviada pelo Frontend
+        const pokemonIds = req.body.ids; // ⬅️ req.body.ids agora funciona por causa do app.use(express.json())
+
+        // Verifica se a lista de IDs é válida e não está vazia
+        if (!Array.isArray(pokemonIds) || pokemonIds.length === 0) {
+            return res.json([]); // Retorna lista vazia rapidamente
+        }
+
+        // Cria uma lista de promessas para buscar os detalhes de CADA Pokémon pelo seu ID
+        const promises = pokemonIds.map(id =>
+            axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        );
+
+        // Executa todas as buscas em paralelo
+        const results = await Promise.all(promises);
+
+        // Formata os dados de cada Pokémon
+        const formattedList = results.map(r => formatPokemon(r.data));
+
+        res.json(formattedList);
+    } catch (error) {
+        console.error('Erro na rota /pokemons/favoritos:', error);
+        res.status(500).send('Erro ao buscar pokémons favoritos');
     }
 });
 
