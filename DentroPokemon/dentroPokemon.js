@@ -40,7 +40,7 @@
             const backgroundTypeName = TYPE_TO_BACKGROUND[primaryType] || primaryType;
 
             // USANDO .jpg
-            const backgroundPath = `Sprites-Fundo/${backgroundTypeName}.jpg`;
+            const backgroundPath = `../Sprites-Fundo/${backgroundTypeName}.jpg`;
 
             // Aplica o background à nova camada de desfoque
             const blurredLayer = document.getElementById('blurred-background-layer');

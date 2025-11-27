@@ -160,7 +160,7 @@ let POKEMONS = [];
             const searchInput = document.getElementById('search-input');
             const searchTerm = searchInput.value.toLowerCase().trim();
 
-            let baseList = ALL_POKEMONS; // ⬅️ Agora baseList é sempre ALL_POKEMONS
+            let baseList = ALL_POKEMONS; // Agora baseList é sempre ALL_POKEMONS
 
             // Removido: O filtro de favoritos foi movido para loadFavoriteData
 
@@ -396,7 +396,11 @@ let POKEMONS = [];
 
             POKEMONS.forEach(pokemon => {
                 const card = document.createElement('div');
-                card.className = 'pokemon-card';
+
+                // --- NOVA LINHA DE CÓDIGO ---
+                // Pega o primeiro tipo do Pokémon e formata ele (ex: 'Grama' -> 'tipo-Grama')
+                const tipoPrincipal = pokemon.tipos[0];
+                card.className = `pokemon-card tipo-${tipoPrincipal}`; // <-- Adiciona a classe do tipo
 
                 // === Gui P.: Adicineio isto para os "pop-ups"  ===
                 card.onclick = (event) => {
@@ -508,7 +512,7 @@ let POKEMONS = [];
             // Verifica se a tecla pressionada é 'Escape'
             if (event.key === 'Escape') {
                 // Volta para a página inicial
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
             }
         }
         // Adiciona o Event Listener no objeto window
