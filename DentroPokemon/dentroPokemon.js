@@ -114,7 +114,7 @@
         // Verifica se a tecla pressionada é 'Escape'
         if (event.key === 'Escape') {
             // Executa a mesma ação do botão 'Voltar'
-            window.location.href = 'pokedex.html';
+            window.location.href = '../Pokedex/pokedex.html';
         }
     }
 

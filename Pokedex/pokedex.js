@@ -12,7 +12,7 @@ let POKEMONS = [];
         function openPokemonDetails(pokemonId) {
             // Salva a posição do scroll antes de sair
             sessionStorage.setItem('scrollPos', window.scrollY);
-            window.location.href = `dentroPokemon.html?id=${pokemonId}`;
+            window.location.href = `../DentroPokemon/dentroPokemon.html?id=${pokemonId}`;
         }
 
         function getFavoritos() {
@@ -242,92 +242,61 @@ let POKEMONS = [];
             loadPokemonData(gen);
         }
 
-async function loadPokemonData(geracao = 1) {
-    const STORAGE_KEY = `pokemon_gen_${geracao}`;
-    const grid = document.getElementById('pokemon-grid');
-    let data = null; // Variável para armazenar os dados finais
-
-    // 1. TENTAR CARREGAR DO CACHE (Session Storage)
-    const cachedDataString = sessionStorage.getItem(STORAGE_KEY);
-
-    if (cachedDataString) {
-        // ✅ CACHE HIT: Carrega instantaneamente sem delay ou chamada à API
-        console.log(`Geração ${geracao} carregada do Session Storage.`);
-        try {
-            data = JSON.parse(cachedDataString);
-        } catch (e) {
-            console.error("Erro ao fazer parse do cache, buscando na API.", e);
-            sessionStorage.removeItem(STORAGE_KEY);
-            // data continua null, forçando o fluxo para a API
-        }
-    }
-
-    // 2. BUSCAR NA API SE NÃO HOUVER CACHE VÁLIDO
-    if (!data) {
-        try {
-            // Mostrar Loading (só mostra aqui, pois no cache hit não queremos)
-            if(grid) grid.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
-                            <p>Carregando Geração ${geracao}...</p>
-                            <div class="loader" ></div>
-                            <style>
-                            .loader {
-                                margin: 0 auto; 
-                                display: block;
-                                border: 5px solid #f3f3f3; 
-                                border-top: 5px solid #712a8bff; 
-                                border-radius: 50%;
-                                width: 40px;
-                                height: 40px;
-                                animation: spin 1s linear infinite;
-                                opacity: 0.8;
-                                }
-                                
-                                @keyframes spin {
-                                0% { transform: rotate(0deg); }
-                                100% { transform: rotate(360deg); }
+        async function loadPokemonData(geracao = 1) {
+            try {
+                const grid = document.getElementById('pokemon-grid');
+                // Loading bonito
+                if(grid) grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+                        <p>Carregando Geração ${geracao}...</p>
+                        <div class="loader" ></div>
+                        <style>
+                        .loader {
+                            margin: 0 auto; 
+                            display: block;
+                            border: 5px solid #f3f3f3; 
+                            border-top: 5px solid #712a8bff; 
+                            border-radius: 50%;
+                            width: 40px;
+                            height: 40px;
+                            animation: spin 1s linear infinite;
+                            opacity: 0.8;
                             }
-                            </style>
-                        </div>
-                    `;
+                            
+                            @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                        </style>
+                    </div>
+                `;
 
-            const response = await fetch(`/pokemons?gen=${geracao}`);
+                const response = await fetch(`/pokemons?gen=${geracao}`);
 
-            if (!response.ok) throw new Error("Erro na API");
+                if (!response.ok) throw new Error("Erro na API");
 
-            data = await response.json();
+                const data = await response.json();
 
-            // 💾 SALVAR NO CACHE APÓS O SUCESSO DA BUSCA
-            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            console.log(`Geração ${geracao} salva no Session Storage.`);
+                ALL_POKEMONS = data;
+                POKEMONS = data;
 
-        } catch (error) {
-            console.error("Erro:", error);
-            // Exibir mensagem de erro
-            if(grid) grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: red; padding: 50px;">Erro ao carregar dados. Tente novamente.</div>`;
-            return; // Interrompe se houve erro na API
+                renderPokemonGrid();
+                updateUI(); // Reaplica os favoritos (corações)
+
+                // Restaura o scroll se houver 
+                const scrollSalvo = sessionStorage.getItem('scrollPos');
+                if (scrollSalvo) {
+                    setTimeout(() => {
+                        window.scrollTo(0, parseFloat(scrollSalvo));
+                        // Limpa o scroll para não rolar se der F5 na página
+                        sessionStorage.removeItem('scrollPos'); 
+                    }, 150); // Pequeno delay para garantir que o DOM renderizou
+                }
+
+            } catch (error) {
+                console.error("Erro:", error);
+            }
         }
-    }
-
-    // 3. ATUALIZAR INTERFACE COM OS DADOS (seja do cache ou da API)
-    if (data) {
-        ALL_POKEMONS = data;
-        POKEMONS = data;
-
-        renderPokemonGrid();
-        updateUI(); // Reaplica os favoritos (corações)
-
-        // Restaura o scroll se houver
-        const scrollSalvo = sessionStorage.getItem('scrollPos');
-        if (scrollSalvo) {
-            setTimeout(() => {
-                window.scrollTo(0, parseFloat(scrollSalvo));
-                // Limpa o scroll para não rolar se der F5 na página
-                sessionStorage.removeItem('scrollPos');
-            }, 150); // Pequeno delay para garantir que o DOM renderizou
-        }
-    }
-}
 
         // Cria e injeta os cards de Pokémon na grade.
         function renderPokemonGrid() {
