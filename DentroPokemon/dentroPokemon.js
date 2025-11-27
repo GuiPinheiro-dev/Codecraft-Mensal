@@ -42,6 +42,8 @@
             // USANDO .jpg
             const backgroundPath = `../Sprites-Fundo/${backgroundTypeName}.jpg`;
 
+            console.log("67.png");
+
             // Aplica o Background à nova camada de desfoque
             const blurredLayer = document.getElementById('blurred-background-layer');
             blurredLayer.style.backgroundImage = `url(${backgroundPath})`;
